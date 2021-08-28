@@ -13,7 +13,6 @@
         // debug(rootQueryActivityFolderID);
         for(var i=0; i<languageLength; i++)
         {
-            
             debug(languages[i].LanguageKey);
         }
         
