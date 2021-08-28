@@ -88,8 +88,8 @@
         }
         
         debug(filter);
-        var data = prox.retrieve("DataFolder", cols, filter);
-        return data.Results;
+        //var data = prox.retrieve("DataFolder", cols, filter);
+        //return data.Results;
     }
 
 </script>
