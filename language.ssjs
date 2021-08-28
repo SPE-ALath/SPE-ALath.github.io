@@ -1,10 +1,11 @@
 <script runat="server" language="javascript">
     Platform.Load("Core", "1.1.5");
     Platform.Function.ContentBlockByKey('email360-ssjs-lib');
+    var prox = new Script.Util.WSProxy();
 
     try{
         
-        debugMode = ['html'];
+        debugMode = ['console'];
         
         var languages = Platform.Function.LookupRows('ENT.CA-520000847-ISG-Language',['LU'],['1']);
         debug(languages);
@@ -31,7 +32,7 @@
     }
 
     function getParentFolders(folderID,folderName,contentType){
-        var prox = new Script.Util.WSProxy();
+        
         var cols = ["ID","Name","ParentFolder.ID"];
         var filter = null;
         if(folderID == null && folderName == null)
