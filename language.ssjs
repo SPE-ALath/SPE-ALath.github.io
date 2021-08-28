@@ -7,8 +7,12 @@
         debugMode = ['console'];
         
         
-        var obj = Platform.Function.LookupRows('ENT.CA-520000847-ISG-Language',['LU'],['1']);
-        debug(obj);
+        var languages = Platform.Function.LookupRows('ENT.CA-520000847-ISG-Language',['LU'],['1']);
+        languages.foreach(function(){
+            queryRootParent = getParentFolders("0",null,"queryactivity");
+            debug(queryRootParent);
+        });
+        
         
         var parentFolderID = 0;
         var prox = new Script.Util.WSProxy();
@@ -93,33 +97,61 @@
             });
         }
     }
+    
+    function getParentFolders(folderID,folderName,contentType){
+        var prox = new Script.Util.WSProxy();
+        var cols = ["ID","Name","ParentFolder.ID"];
+        var filter = null;
+        if(!folderID && !folderName)
+        {
+            return null;
+        }
+        elseif(!folderID)
+        {
+            filter = {
+               LeftOperand: {
+                  Property: "Name", 
+                  SimpleOperator: "equals", 
+                  Value: folderName
+               },
+               LogicalOperator: "AND",
+               RightOperand: {
+                  Property: "ContentType", 
+                  SimpleOperator: "equals", 
+                  Value: contentType
+               }
+            };
+        }
+        else
+        {
+            filter = {
+               LeftOperand: {
+                  Property: "ID", 
+                  SimpleOperator: "equals", 
+                  Value: folderID
+               },
+               LogicalOperator: "AND",
+               RightOperand: {
+                  Property: "ContentType", 
+                  SimpleOperator: "equals", 
+                  Value: contentType
+               }
+            };
+        }
+        var data = prox.retrieve("DataFolder", cols, filter);
+        return data.Results;
+    }
 
     function checkIfFolderExist(parentFolderID,folderName,contentType){
-        var prox = new Script.Util.WSProxy();
-        cols = [ "ID","ParentFolder.ID"];
-        filter = {
-           LeftOperand: {
-              Property: "Name", 
-              SimpleOperator: "equals", 
-              Value: folderName
-           },
-           LogicalOperator: "AND",
-           RightOperand: {
-              Property: "ContentType", 
-              SimpleOperator: "equals", 
-              Value: contentType
-           }
-        };
-        data = prox.retrieve("DataFolder", cols, filter);
+        var parentFolders = getParentFolders(null,folderName,contentType);
         
-        for(var i=0; i<data.Results.length; i++)
+        for(var i=0; i<parentFolders.length; i++)
         {
-            if(data.Results[i].ParentFolder.ID == parentFolderID)
+            if(parentFolders[i].ParentFolder.ID == parentFolderID)
             {
-                return data.Results[i].ID;
+                return parentFolders[i].ID;
             }
         }
         return null;
-        
     }
 </script>
