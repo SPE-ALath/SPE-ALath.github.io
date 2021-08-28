@@ -30,7 +30,9 @@
         }
     }
 
-    function getParentFolders(folderID, folderName, contentType){
-        debug(folderID);
+    function getParentFolders(folderID, folderName, contentType)
+    {
+        Write(Stringify(folderID));
     }
+
 </script>
