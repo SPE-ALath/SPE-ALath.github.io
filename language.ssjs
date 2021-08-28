@@ -8,7 +8,10 @@
         
         
         var languages = Platform.Function.LookupRows('ENT.CA-520000847-ISG-Language',['LU'],['1']);
-        
+        languages.foreach(function(){
+            queryRootParent = getParentFolders("0",null,"queryactivity");
+            debug(queryRootParent);
+        });
         
         
         
@@ -31,11 +34,11 @@
         var prox = new Script.Util.WSProxy();
         var cols = ["ID","Name","ParentFolder.ID"];
         var filter = null;
-        if(!folderID && !folderName)
+        if(folderID == null && folderName == null)
         {
             return null;
         }
-        elseif(!folderID)
+        elseif(folderID == null)
         {
             filter = {
                LeftOperand: {
