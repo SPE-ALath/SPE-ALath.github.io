@@ -9,7 +9,7 @@
         
         var languages = Platform.Function.LookupRows('ENT.CA-520000847-ISG-Language',['LU'],['1']);
         languages.forEach((language)=>{
-            debug(language);
+            Write(Stringify(language));
         });
         
         
