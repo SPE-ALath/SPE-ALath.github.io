@@ -6,18 +6,54 @@
   
   try{
     debugMode = ['console'];
+    
+    // FETCH : ROOT FOLDER : ID : QUERY ACTIVITY : TO CREATE CHILD FOLDERS
+    var rootQueryActivityFolderID = getFolders(0,null,null,"queryactivity")[0].ID;
+    
+    // FETCH : ROOT FOLDER : ID : DATA EXTENSION : TO CREATE CHILD FOLDERS
+    var rootDEActivityFolderID = getFolders(0,null,null,"dataextension")[0].ID;
+    
+    // CREATE : SUB FOLDER : _USED-FOR-SENDING : TO CREATE AUTO GENERATE QUERIES AND DATA EXTENSION CHILD FOLDERS
+    var usedForSendingFolderName = "_USED-FOR-SENDING";
+    var usedForSendingDEFolder = getFolders(rootDEActivityFolderID,null,usedForSendingFolderName,"dataextension");
+    var usedForSendingQueryFolder = getFolders(rootQueryActivityFolderID,null,usedForSendingFolderName,"queryactivity");
+    
+    if(usedForSendingDEFolder.length == 0)
+    {
+      var isUsedForSendingDEFolderCreated = createFolder(usedForSendingFolderName,rootDEActivityFolderID,"dataextension");
+      debug(isUsedForSendingDEFolderCreated);
+    }
+    
+    if(usedForSendingQueryFolder.length == 0)
+    {
+      var isUsedForSendingQueryFolderCreated = createFolder(usedForSendingFolderName,rootQueryActivityFolderID,"queryactivity");
+      debug(isUsedForSendingQueryFolderCreated);
+    }
+    
+    var usedForSendingDEFolderID = getFolders(rootDEActivityFolderID,null,usedForSendingFolderName,"dataextension")[0].ID;
+    var usedForSendingQueryFolderID = getFolders(rootQueryActivityFolderID,null,usedForSendingFolderName,"queryactivity")[0].ID;
 
+    // FETCH : LANGUAGE ENTITY : TO CREATE CHILD FOLDER FOR EACH LANGUAGE
     var languages = Platform.Function.LookupRows('ENT.CA-520000847-ISG-Language',['LU'],['1']);
     debug(languages);
     var languageLength = languages.length;
 
-    //var rootQueryActivityFolderID = getFolders(0,null,null,"queryactivity")[0].ID;
-    //debug(rootQueryActivityFolderID);
-
     for(var i=0; i<languageLength; i++)
     {
-      var languageKeyFolder = getFolders(313121,null,languages[i].LanguageKey,"queryactivity");
-      debug(languageKeyFolder);
+      var languageQueryKeyFolder = getFolders(usedForSendingQueryFolderID,null,languages[i].LanguageKey,"queryactivity");
+      if(languageQueryKeyFolder.length == 0)
+      {
+        var isQueryFolderCreated = createFolder(languages[i].LanguageKey,usedForSendingQueryFolderID,"queryactivity");
+        debug(isQueryFolderCreated);
+      }
+      
+      var languageDEKeyFolder = getFolders(usedForSendingDEFolderID,null,languages[i].LanguageKey,"dataextension");
+      if(languageDEKeyFolder.length == 0)
+      {
+        var isDEFolderCreated = createFolder(languages[i].LanguageKey,usedForSendingDEFolderID,"dataextension");
+        debug(isDEFolderCreated);
+      }
+      
     }
   } catch(e){
     // workaround for Thread Abort Exception from redirect
@@ -31,6 +67,22 @@
         errorDebug: Platform.Function.Stringify(e)
       });
     }
+  }
+  
+  function createFolder(name,parentFolderID,contentType)
+  {
+    var config = {
+      "Name": name,
+      "Description": name,
+      "ParentFolderID": parentFolderID,
+      "ContentType": contentType,
+      "IsActive" : "true",
+      "IsEditable" : "true",
+      "AllowChildren" : "true"
+    };
+    debug(config);
+    var createResult = Folder.Add(config);
+    return createResult;
   }
 
   function getFolders(parentFolderID, folderID, folderName, contentType)
@@ -87,7 +139,6 @@
     {
       return null;
     }
-    debug(filter);
     var data = prox.retrieve("DataFolder", cols, filter);
     return data.Results;
   }
