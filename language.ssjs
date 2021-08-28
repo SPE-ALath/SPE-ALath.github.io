@@ -30,7 +30,7 @@
         }
     }
 
-    function getParentFolders(folderID,folderName,contentType){
+    function getParentFolders(folderID, folderName, contentType){
         debug(folderID);
     }
 </script>
