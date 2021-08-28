@@ -10,7 +10,7 @@
         var languages = Platform.Function.LookupRows('ENT.CA-520000847-ISG-Language',['LU'],['1']);
         for(var language of languages)
         {
-            debug(language);
+            debug("");
         }
         
         
