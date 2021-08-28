@@ -7,9 +7,10 @@
         debugMode = ['console'];
         
         var languages = Platform.Function.LookupRows('ENT.CA-520000847-ISG-Language',['LU'],['1']);
-        for(var language in languages)
+        var languageLength = languages.length;
+        for(var i=0; i<languageLength; i++)
         {
-            debug(language);
+            debug(languages[i].LanguageKey);
         }
         
     } catch(e){
