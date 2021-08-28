@@ -8,10 +8,7 @@
         
         
         var languages = Platform.Function.LookupRows('ENT.CA-520000847-ISG-Language',['LU'],['1']);
-        languages.forEach(function(){
-            queryRootParent = getParentFolders("0",null,"queryactivity");
-            debug(languages);
-        });
+        debug(languages);
         
         
         
@@ -29,48 +26,5 @@
             });
         }
     }
-    
-    function getParentFolders(folderID,folderName,contentType){
-        var prox = new Script.Util.WSProxy();
-        var cols = ["ID","Name","ParentFolder.ID"];
-        var filter = null;
-        if(folderID == null && folderName == null)
-        {
-            return null;
-        }
-        elseif(folderID == null)
-        {
-            filter = {
-               LeftOperand: {
-                  Property: "Name", 
-                  SimpleOperator: "equals", 
-                  Value: folderName
-               },
-               LogicalOperator: "AND",
-               RightOperand: {
-                  Property: "ContentType", 
-                  SimpleOperator: "equals", 
-                  Value: contentType
-               }
-            };
-        }
-        else
-        {
-            filter = {
-               LeftOperand: {
-                  Property: "ID", 
-                  SimpleOperator: "equals", 
-                  Value: folderID
-               },
-               LogicalOperator: "AND",
-               RightOperand: {
-                  Property: "ContentType", 
-                  SimpleOperator: "equals", 
-                  Value: contentType
-               }
-            };
-        }
-        var data = prox.retrieve("DataFolder", cols, filter);
-        return data.Results;
-    }
+
 </script>
