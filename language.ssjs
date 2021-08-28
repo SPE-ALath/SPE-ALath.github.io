@@ -32,7 +32,7 @@
     function getParentFolders(folderID, folderName, contentType)
     {
         var prox = new Script.Util.WSProxy();
-        Write(Stringify(folderID));
+        debug(folderID);
     }
 
 </script>
