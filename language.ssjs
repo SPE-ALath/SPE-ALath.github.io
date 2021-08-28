@@ -63,7 +63,7 @@
         };
         parentData = prox.retrieve("DataFolder", cols, filter);
         
-        checkIfFolderExist(parentData.Results[0].ID,"english","queryactivity");
+        debug(checkIfFolderExist(parentData.Results[0].ID,"english","queryactivity"));
         
         var config = {
           "Name": "english",
@@ -111,6 +111,15 @@
            }
         };
         data = prox.retrieve("DataFolder", cols, filter);
-        debug(data);
+        
+        for(var i=0; i<data.Results.length; i++)
+        {
+            if(data.Results[i].ParentFolder.ID == parentFolderID)
+            {
+                return data.Results[i].ID;
+            }
+        }
+        return null;
+        
     }
 </script>
