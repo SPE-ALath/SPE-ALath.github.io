@@ -6,7 +6,7 @@
         debugMode = ['console'];
         
         var languages = Platform.Function.LookupRows('ENT.CA-520000847-ISG-Language',['LU'],['1']);
-        debug(languages);
+        // debug(languages);
         var languageLength = languages.length;
         // var rootQueryActivityFolders = getParentFolders("0",null,"queryactivity");
         // debug(rootQueryActivityFolders);
