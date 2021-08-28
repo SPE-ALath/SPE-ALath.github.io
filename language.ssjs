@@ -8,7 +8,7 @@
         var languages = Platform.Function.LookupRows('ENT.CA-520000847-ISG-Language',['LU'],['1']);
         // debug(languages);
         var languageLength = languages.length;
-        var rootQueryActivityFolders = getParentFolders(0,null,"queryactivity");
+        var rootQueryActivityFolders = getParentFolders(0,null,null,"queryactivity");
         debug(rootQueryActivityFolders);
         for(var i=0; i<languageLength; i++)
         {
@@ -29,16 +29,44 @@
         }
     }
 
-    function getParentFolders(folderID, folderName, contentType)
+    function getFolders(parentFolderID, folderID, folderName, contentType)
     {
         var prox = new Script.Util.WSProxy();
         var cols = ["ID","Name","ParentFolder.ID"];
         var filter = null;
-        if(folderID == null && folderName == null)
+        if(parentFolderID != null)
         {
-            return null;
+            filter = {
+               LeftOperand: {
+                  Property: "ParentFolder.ID", 
+                  SimpleOperator: "equals", 
+                  Value: parentFolderID
+               },
+               LogicalOperator: "AND",
+               RightOperand: {
+                  Property: "ContentType", 
+                  SimpleOperator: "equals", 
+                  Value: contentType
+               }
+            };
         }
-        else if(folderID == null)
+        else if(folderID != null)
+        {
+            filter = {
+               LeftOperand: {
+                  Property: "ID", 
+                  SimpleOperator: "equals", 
+                  Value: folderID
+               },
+               LogicalOperator: "AND",
+               RightOperand: {
+                  Property: "ContentType", 
+                  SimpleOperator: "equals", 
+                  Value: contentType
+               }
+            };
+        }
+        else if(folderName != null)
         {
             filter = {
                LeftOperand: {
@@ -56,19 +84,7 @@
         }
         else
         {
-            filter = {
-               LeftOperand: {
-                  Property: "ID", 
-                  SimpleOperator: "equals", 
-                  Value: folderID
-               },
-               LogicalOperator: "AND",
-               RightOperand: {
-                  Property: "ContentType", 
-                  SimpleOperator: "equals", 
-                  Value: contentType
-               }
-            };
+            return null;
         }
         debug(filter);
         var data = prox.retrieve("DataFolder", cols, filter);
