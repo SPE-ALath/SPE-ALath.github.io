@@ -7,9 +7,10 @@
         debugMode = ['console'];
         
         var languages = Platform.Function.LookupRows('ENT.CA-520000847-ISG-Language',['LU'],['1']);
-        languages.forEach((language)=>{
-            Write(Stringify(language));
-        });
+        for(var language in languages)
+        {
+            debug(language);
+        }
         
     } catch(e){
         // workaround for Thread Abort Exception from redirect
