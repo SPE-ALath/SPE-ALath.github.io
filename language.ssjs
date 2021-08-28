@@ -14,75 +14,7 @@
         });
         
         
-        var parentFolderID = 0;
-        var prox = new Script.Util.WSProxy();
-        var cols = [ "Name","ContentType","ID","CustomerKey"];
-        var filter = {
-           LeftOperand: {
-              Property: "ParentFolder.ID", 
-              SimpleOperator: "equals", 
-              Value: parentFolderID
-           },
-           LogicalOperator: "AND",
-           RightOperand: {
-              Property: "ContentType", 
-              SimpleOperator: "equals", 
-              Value: 'dataextension'
-           }
-        };
-        var data = prox.retrieve("DataFolder", cols, filter);
-        debug(data);
         
-        parentFolderID = 0;
-        prox = new Script.Util.WSProxy();
-        cols = [ "Name","ContentType","ID","CustomerKey"];
-        filter = {
-           LeftOperand: {
-              Property: "ParentFolder.ID", 
-              SimpleOperator: "equals", 
-              Value: parentFolderID
-           },
-           LogicalOperator: "AND",
-           RightOperand: {
-              Property: "ContentType", 
-              SimpleOperator: "equals", 
-              Value: 'queryactivity'
-           }
-        };
-        data = prox.retrieve("DataFolder", cols, filter);
-        
-        cols = [ "Name","ContentType","ID","CustomerKey"];
-        filter = {
-           LeftOperand: {
-              Property: "ParentFolder.ID", 
-              SimpleOperator: "equals", 
-              Value: parentFolderID
-           },
-           LogicalOperator: "AND",
-           RightOperand: {
-              Property: "ContentType", 
-              SimpleOperator: "equals", 
-              Value: 'queryactivity'
-           }
-        };
-        parentData = prox.retrieve("DataFolder", cols, filter);
-        
-        debug(checkIfFolderExist(parentData.Results[0].ID,"english","queryactivity"));
-        
-        var config = {
-          "Name": "english",
-          "Description": "english",
-          "ParentFolderID": parentData.Results[0].ID,
-          "ContentType": "queryactivity",
-          "IsActive" : "true",
-          "IsEditable" : "true",
-          "AllowChildren" : "true"
-        };
-        debug(config);
-        // var createResult = Folder.Add(config);
-       
-        var queryFolder = Folder.Retrieve({Property:"ContentType",SimpleOperator:"equals",Value:"queryactivity"});
-        debug(queryFolder);
         
     } catch(e){
         // workaround for Thread Abort Exception from redirect
