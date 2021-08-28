@@ -1,7 +1,7 @@
 <script runat="server" language="javascript">
     Platform.Load("Core", "1.1.5");
     Platform.Function.ContentBlockByKey('email360-ssjs-lib');
-    var prox = new Script.Util.WSProxy();
+    // var prox = new Script.Util.WSProxy();
 
     try{
         debugMode = ['console'];
