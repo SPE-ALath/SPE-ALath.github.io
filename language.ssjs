@@ -4,7 +4,6 @@
     var prox = new Script.Util.WSProxy();
 
     try{
-        
         debugMode = ['console'];
         
         var languages = Platform.Function.LookupRows('ENT.CA-520000847-ISG-Language',['LU'],['1']);
@@ -32,9 +31,8 @@
     }
 
     function getParentFolders(folderID,folderName,contentType){
-        
-        var cols = ["ID","Name","ParentFolder.ID"];
-        var filter = null;
+        var prox = new Script.Util.WSProxy();
+        cols = ["ID","Name","ParentFolder.ID"];
         if(folderID == null && folderName == null)
         {
             return null;
