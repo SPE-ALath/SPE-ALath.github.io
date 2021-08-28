@@ -73,17 +73,4 @@
         var data = prox.retrieve("DataFolder", cols, filter);
         return data.Results;
     }
-
-    function checkIfFolderExist(parentFolderID,folderName,contentType){
-        var parentFolders = getParentFolders(null,folderName,contentType);
-        
-        for(var i=0; i<parentFolders.length; i++)
-        {
-            if(parentFolders[i].ParentFolder.ID == parentFolderID)
-            {
-                return parentFolders[i].ID;
-            }
-        }
-        return null;
-    }
 </script>
