@@ -34,7 +34,7 @@
         var prox = new Script.Util.WSProxy();
         var cols = ["ID","Name","ParentFolder.ID"];
         var filter = null;
-        if(parentFolderID !== null)
+        if(!(parentFolderID == null))
         {
             filter = {
                LeftOperand: {
@@ -50,7 +50,7 @@
                }
             };
         }
-        else if(folderID !== null)
+        else if(!(folderID == null))
         {
             filter = {
                LeftOperand: {
@@ -66,7 +66,7 @@
                }
             };
         }
-        else if(folderName !== null)
+        else if(!(folderName == null))
         {
             filter = {
                LeftOperand: {
