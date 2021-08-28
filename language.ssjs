@@ -1,6 +1,7 @@
 <script runat="server" language="javascript">
     Platform.Load("Core", "1.1.5");
     Platform.Function.ContentBlockByKey('email360-ssjs-lib');
+    var prox = new Script.Util.WSProxy();
 
     try{
         debugMode = ['console'];
@@ -30,45 +31,6 @@
     }
 
     function getParentFolders(folderID,folderName,contentType){
-        var prox = new Script.Util.WSProxy();
-        cols = ["ID","Name","ParentFolder.ID"];
-        if(folderID == null && folderName == null)
-        {
-            return null;
-        }
-        elseif(folderID == null)
-        {
-            filter = {
-               LeftOperand: {
-                  Property: "Name", 
-                  SimpleOperator: "equals", 
-                  Value: folderName
-               },
-               LogicalOperator: "AND",
-               RightOperand: {
-                  Property: "ContentType", 
-                  SimpleOperator: "equals", 
-                  Value: contentType
-               }
-            };
-        }
-        else
-        {
-            filter = {
-               LeftOperand: {
-                  Property: "ID", 
-                  SimpleOperator: "equals", 
-                  Value: folderID
-               },
-               LogicalOperator: "AND",
-               RightOperand: {
-                  Property: "ContentType", 
-                  SimpleOperator: "equals", 
-                  Value: contentType
-               }
-            };
-        }
-        // var data = prox.retrieve("DataFolder", cols, filter);
-        // return data.Results;
+        debug(folderID);
     }
 </script>
