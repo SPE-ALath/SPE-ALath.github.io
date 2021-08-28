@@ -8,9 +8,9 @@
         
         
         var languages = Platform.Function.LookupRows('ENT.CA-520000847-ISG-Language',['LU'],['1']);
-        languages.foreach(function(){
+        languages.forEach(function(){
             queryRootParent = getParentFolders("0",null,"queryactivity");
-            debug(queryRootParent);
+            debug(languages);
         });
         
         
